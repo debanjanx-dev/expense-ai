@@ -32,9 +32,9 @@ export default function LandingPage() {
           </div>
 
           <TextAnimate className="text-5xl md:text-6xl font-bold font-playfair mb-2 leading-tight">
-            Transform the Way You 
+            Transform the Way You
           </TextAnimate>
-          
+
           <WordRotate
             className="text-5xl md:text-6xl font-bold font-playfair text-primary mb-6"
             words={["Spend", "Budget", "Invest", "Save"]}
@@ -46,7 +46,7 @@ export default function LandingPage() {
               transition: { duration: 0.5, ease: "easeOut" },
             }}
           />
-          
+
           <TextAnimate className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             Leverage advanced AI to analyze your expenses, uncover hidden
             patterns, and receive personalized financial advice that transforms
@@ -78,7 +78,13 @@ export default function LandingPage() {
       {/* Features Section */}
       <section id="features" className="py-20 px-4">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
             <h2 className="text-4xl font-bold font-playfair mb-4">
               Intelligent Financial Analysis
             </h2>
@@ -86,72 +92,91 @@ export default function LandingPage() {
               Our AI-powered platform provides deep insights into your spending
               habits with actionable recommendations.
             </p>
-          </div>
+          </motion.div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-border bg-card hover:bg-card/80 transition-colors">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
-                  <Brain className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold font-playfair mb-4">
-                  AI-Powered Analysis
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Google Gemini AI analyzes your spending patterns, categorizes
-                  expenses automatically, and identifies optimization
-                  opportunities you might miss.
-                </p>
-              </CardContent>
-            </Card>
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="border-border bg-card hover:bg-card/80 transition-colors">
+            <CardContent className="p-8">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
+                <Brain className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold font-playfair mb-4">
+                AI-Powered Analysis
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Google Gemini AI analyzes your spending patterns, categorizes
+                expenses automatically, and identifies optimization
+                opportunities you might miss.
+              </p>
+            </CardContent>
+          </Card>
 
-            <Card className="border-border bg-card hover:bg-card/80 transition-colors">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
-                  <TrendingUp className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-xl font-bold font-playfair mb-4">
-                  Smart Recommendations
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Receive personalized advice on budget optimization, savings
-                  opportunities, and financial goal achievement based on your
-                  unique spending behavior.
-                </p>
-              </CardContent>
-            </Card>
+          <Card className="border-border bg-card hover:bg-card/80 transition-colors">
+            <CardContent className="p-8">
+              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
+                <TrendingUp className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="text-xl font-bold font-playfair mb-4">
+                Smart Recommendations
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Receive personalized advice on budget optimization, savings
+                opportunities, and financial goal achievement based on your
+                unique spending behavior.
+              </p>
+            </CardContent>
+          </Card>
 
-            <Card className="border-border bg-card hover:bg-card/80 transition-colors">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mb-6">
-                  <Shield className="w-6 h-6 text-secondary" />
-                </div>
-                <h3 className="text-xl font-bold font-playfair mb-4">
-                  Secure & Private
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Your financial data is encrypted and processed securely. We
-                  never store sensitive information and comply with
-                  industry-leading security standards.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="border-border bg-card hover:bg-card/80 transition-colors">
+            <CardContent className="p-8">
+              <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mb-6">
+                <Shield className="w-6 h-6 text-secondary" />
+              </div>
+              <h3 className="text-xl font-bold font-playfair mb-4">
+                Secure & Private
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Your financial data is encrypted and processed securely. We
+                never store sensitive information and comply with
+                industry-leading security standards.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20 px-4 bg-muted/20">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-playfair mb-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <motion.h2
+              className="text-4xl font-bold font-playfair mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               How ExpenseAI Works
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            </motion.h2>
+
+            <motion.p
+              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
               Three simple steps to transform your financial management with
               AI-powered insights.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
@@ -236,22 +261,57 @@ export default function LandingPage() {
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-primary/5">
-        <div className="container mx-auto text-center max-w-3xl">
-          <h2 className="text-4xl font-bold font-playfair mb-6">
+        ;
+        <motion.div
+          className="container mx-auto text-center max-w-3xl"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <motion.h2
+            className="text-4xl font-bold font-playfair mb-6"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
             Ready to Transform Your Financial Future?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          </motion.h2>
+
+          <motion.p
+            className="text-xl text-muted-foreground mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             Join thousands of users who have already improved their financial
             health with AI-powered insights.
-          </p>
-          <Button size="lg" className="text-lg px-8 py-6">
-            Start Your Free Trial
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-          <p className="text-sm text-muted-foreground mt-4">
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <Button size="lg" className="text-lg px-8 py-6">
+              Start Your Free Trial
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
+
+          <motion.p
+            className="text-sm text-muted-foreground mt-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            viewport={{ once: true }}
+          >
             No credit card required • 14-day free trial • Cancel anytime
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </section>
     </>
   );
