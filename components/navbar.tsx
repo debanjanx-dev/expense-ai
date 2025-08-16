@@ -13,7 +13,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 export default function Navbar() {
-  const { isSignedIn, user } = useUser();
+  const { user } = useUser();
 
   return (
     <div className="bg-black text-foreground">
