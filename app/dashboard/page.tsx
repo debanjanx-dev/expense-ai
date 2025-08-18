@@ -4,13 +4,12 @@ import { Expense } from "@/lib/supabase/models";
 import { addExpense, deleteExpense, getExpenses } from "@/app/actions";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
-// import { expenseService } from "@/lib/supabase/server";
 
-export default function Dashboard({ userId }: { userId: string }) {
-  const { user } = useUser();
+export default function Dashboard() {
+  const { user, isLoaded } = useUser();
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(false);
-    
+
   // Form state
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("General");
@@ -20,30 +19,42 @@ export default function Dashboard({ userId }: { userId: string }) {
     new Date().toISOString().split("T")[0]
   ); // default today
 
-  // ✅ Fetch expenses
+  // ✅ Fetch expenses once user is available
   useEffect(() => {
     async function fetchExpenses() {
+      if (!isLoaded || !user) return;
+
+      console.log("👤 Clerk User ID:", user.id); // <-- Log Clerk ID
+
       try {
         setLoading(true);
-        const data = await getExpenses(userId);
+        const data = await getExpenses(user.id);
         setExpenses(data);
       } catch (error) {
-        console.error("Error in fetching Expenses", error);
+        console.error("❌ Error in fetching Expenses", error);
         console.error("Error details:", JSON.stringify(error, null, 2));
       } finally {
         setLoading(false);
       }
     }
     fetchExpenses();
-  }, [userId]);
+  }, [user, isLoaded]);
 
   // ✅ Add expense
   async function handleAddExpense(e: React.FormEvent) {
     e.preventDefault();
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    console.log("🆕 Adding expense for User ID:", user.id); // <-- Log here too
+
     try {
+        setLoading(true);
       const newExpense = await addExpense({
-        user_id : userId,
-        title, // Make sure to include title
+        user_id: user.id,
+        title,
         category,
         description,
         amount,
@@ -57,8 +68,11 @@ export default function Dashboard({ userId }: { userId: string }) {
       setAmount(0);
       setDate(new Date().toISOString().split("T")[0]);
     } catch (error) {
-      console.error("Error in adding Expense", error);
+      console.error("❌ Error in adding Expense", error);
       console.error("Error details:", JSON.stringify(error, null, 2));
+    }
+    finally{
+        setLoading(false);
     }
   }
 
@@ -68,8 +82,26 @@ export default function Dashboard({ userId }: { userId: string }) {
       await deleteExpense(id);
       setExpenses(expenses.filter((exp) => exp.id !== id));
     } catch (error) {
-      console.error("Error deleting expense", error);
+      console.error("❌ Error deleting expense", error);
     }
+  }
+
+  // Show loading state if Clerk is not ready
+  if (!isLoaded) {
+    return (
+      <div className="container mx-auto px-8 py-8">
+        Loading user data...
+      </div>
+    );
+  }
+
+  // Show message if no user is logged in
+  if (!user) {
+    return (
+      <div className="container mx-auto px-8 py-8">
+        Please log in to view your dashboard.
+      </div>
+    );
   }
 
   return (
@@ -77,7 +109,7 @@ export default function Dashboard({ userId }: { userId: string }) {
       {/* Greeting */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold font-playfair mb-2">
-          Welcome Back, {user?.username ?? user?.emailAddresses[0].emailAddress}
+          Welcome Back, {user.username ?? user.emailAddresses[0]?.emailAddress}
         </h1>
         <p className="text-muted-foreground">
           Here&apos;s your financial overview for this month
@@ -131,7 +163,7 @@ export default function Dashboard({ userId }: { userId: string }) {
           type="submit"
           className="md:col-span-5 bg-blue-600 text-black px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
-          ➕ Add Expense
+          {loading ? "Adding....." : "➕ Add Expense"}
         </button>
       </form>
 
@@ -146,7 +178,7 @@ export default function Dashboard({ userId }: { userId: string }) {
             {expenses.map((exp) => (
               <li
                 key={exp.id}
-                className="flex justify-between items-center p-4 border rounded-lg shadow-sm bg-white"
+                className="flex justify-between items-center p-4 border rounded-lg shadow-sm bg-black"
               >
                 <div>
                   <p className="font-semibold">{exp.category}</p>
