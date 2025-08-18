@@ -261,7 +261,6 @@ export default function LandingPage() {
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-primary/5">
-        ;
         <motion.div
           className="container mx-auto text-center max-w-3xl"
           initial={{ opacity: 0, y: 40 }}
